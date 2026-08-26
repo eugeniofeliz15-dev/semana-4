@@ -51,23 +51,23 @@
             "schema": {
               "type": "object",
               "properties": {
-                "nombre": {
+                "name": {
                   "type": "string",
-                  "example": "Mofongo Especial"
+                  "example": "Agua fresca"
                 },
-                "descripcion": {
+                "description": {
                   "type": "string",
-                  "example": "Plátano verde con chicharrón y salsa criolla"
+                  "example": "De Jamaica"
                 },
-                "precio": {
+                "price": {
                   "type": "number",
-                  "example": 550
+                  "example": 25
                 }
               },
               "required": [
-                "nombre",
-                "descripcion",
-                "precio"
+                "name",
+                "description",
+                "price"
               ]
             }
           }
@@ -75,6 +75,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
@@ -129,23 +132,23 @@
             "schema": {
               "type": "object",
               "properties": {
-                "nombre": {
+                "name": {
                   "type": "string",
-                  "example": "Mofongo Especial Editado"
+                  "example": "Agua fresca editada"
                 },
-                "descripcion": {
+                "description": {
                   "type": "string",
-                  "example": "Plátano verde con queso y chicharrón"
+                  "example": "De Tamarindo"
                 },
-                "precio": {
+                "price": {
                   "type": "number",
-                  "example": 600
+                  "example": 30
                 }
               },
               "required": [
-                "nombre",
-                "descripcion",
-                "precio"
+                "name",
+                "description",
+                "price"
               ]
             }
           }
@@ -153,6 +156,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"

@@ -47,14 +47,17 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         in: 'body',
         description: 'Datos del nuevo producto',
         schema: {
-          $nombre: 'Mofongo Especial',
-          $descripcion: 'Plátano verde con chicharrón y salsa criolla',
-          $precio: 550.00
+          $name: 'Agua fresca',
+          $description: 'De Jamaica',
+          $price: 25
         }
       } */
   try {
-    const { nombre, descripcion, precio } = req.body;
-    const newProduct = await insertProduct(nombre, descripcion, precio);
+    const name = req.body.name || req.body.nombre;
+    const description = req.body.description || req.body.descripcion;
+    const price = req.body.price ?? req.body.precio;
+
+    const newProduct = await insertProduct(name, description, price);
     res.status(201).json(newProduct);
   } catch (error) {
     console.error("Error al crear el producto:", error);
@@ -70,15 +73,18 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         in: 'body',
         description: 'Datos actualizados del producto',
         schema: {
-          $nombre: 'Mofongo Especial Editado',
-          $descripcion: 'Plátano verde con queso y chicharrón',
-          $precio: 600.00
+          $name: 'Agua fresca editada',
+          $description: 'De Tamarindo',
+          $price: 30
         }
       } */
   try {
     const id = parseInt(req.params.id as string, 10);
-    const { nombre, descripcion, precio } = req.body;
-    const updated = await updateProductModel(id, nombre, descripcion, precio);
+    const name = req.body.name || req.body.nombre;
+    const description = req.body.description || req.body.descripcion;
+    const price = req.body.price ?? req.body.precio;
+
+    const updated = await updateProductModel(id, name, description, price);
 
     if (!updated) {
       res.status(404).json({ message: "Producto no encontrado" });
