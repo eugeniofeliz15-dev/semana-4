@@ -6,10 +6,7 @@ import {
   updateCustomer as updateCustomerModel,
 } from "../models/customer.model.js";
 
-// GET /api/customers
 export const getCustomers = async (req: Request, res: Response): Promise<void> => {
-  /*  #swagger.tags = ['Customers']
-      #swagger.summary = 'Obtener todos los clientes' */
   try {
     const customers = await getAllCustomers();
     res.json(customers);
@@ -19,10 +16,9 @@ export const getCustomers = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-// GET /api/customers/:id
+
 export const getCustomer = async (req: Request, res: Response): Promise<void> => {
-  /*  #swagger.tags = ['Customers']
-      #swagger.summary = 'Obtener un cliente por su ID' */
+
   try {
     const id = parseInt(req.params.id as string, 10);
     const customer = await getCustomerById(id);
@@ -39,7 +35,6 @@ export const getCustomer = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-// POST /api/customers
 export const createCustomer = async (req: Request, res: Response): Promise<void> => {
   /*  #swagger.tags = ['Customers']
       #swagger.summary = 'Crear un nuevo cliente'
@@ -65,7 +60,6 @@ export const createCustomer = async (req: Request, res: Response): Promise<void>
   }
 };
 
-// PUT /api/customers/:id
 export const updateCustomer = async (req: Request, res: Response): Promise<void> => {
   /*  #swagger.tags = ['Customers']
       #swagger.summary = 'Actualizar un cliente existente'
