@@ -6,10 +6,8 @@ import {
   updateProduct as updateProductModel,
 } from "../models/product.model.js";
 
-// GET /api/menu
+
 export const getMenu = async (req: Request, res: Response): Promise<void> => {
-  /*  #swagger.tags = ['Products']
-      #swagger.summary = 'Obtener todos los productos del menú' */
   try {
     const products = await getAllProducts();
     res.json(products);
@@ -19,10 +17,8 @@ export const getMenu = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// GET /api/menu/:id
+
 export const getProduct = async (req: Request, res: Response): Promise<void> => {
-  /*  #swagger.tags = ['Products']
-      #swagger.summary = 'Obtener un producto por su ID' */
   try {
     const id = parseInt(req.params.id as string, 10);
     const product = await getProductById(id);
@@ -39,7 +35,6 @@ export const getProduct = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-// POST /api/menu
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
   /*  #swagger.tags = ['Products']
       #swagger.summary = 'Crear un nuevo producto'
@@ -65,7 +60,6 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
   }
 };
 
-// PUT /api/menu/:id
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   /*  #swagger.tags = ['Products']
       #swagger.summary = 'Actualizar un producto existente'
