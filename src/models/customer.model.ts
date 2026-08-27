@@ -7,7 +7,6 @@ export interface Customer {
   telefono?: string | null;
 }
 
-// 1. Obtener todos los clientes
 export const getAllCustomers = async (): Promise<Customer[]> => {
   const result = await pool.query(
     "SELECT id_cliente, nombre, email, telefono FROM cliente ORDER BY id_cliente ASC"
@@ -15,7 +14,6 @@ export const getAllCustomers = async (): Promise<Customer[]> => {
   return result.rows;
 };
 
-// 2. Obtener un cliente por ID (Parametrizado con $1)
 export const getCustomerById = async (id: number): Promise<Customer | null> => {
   const result = await pool.query(
     "SELECT id_cliente, nombre, email, telefono FROM cliente WHERE id_cliente = $1",
@@ -24,7 +22,6 @@ export const getCustomerById = async (id: number): Promise<Customer | null> => {
   return result.rows[0] || null;
 };
 
-// 3. Insertar un cliente (Parametrizado con $1, $2, $3)
 export const insertCustomer = async (
   nombre: string,
   email: string,
@@ -37,7 +34,6 @@ export const insertCustomer = async (
   return result.rows[0];
 };
 
-// 4. Actualizar un cliente existente (Parametrizado con $1, $2, $3, $4)
 export const updateCustomer = async (
   id: number,
   nombre: string,
