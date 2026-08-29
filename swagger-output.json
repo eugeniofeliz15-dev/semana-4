@@ -26,8 +26,33 @@
         "tags": [
           "Products"
         ],
-        "summary": "Obtener todos los productos del menú",
+        "summary": "Obtener productos del menú con filtros y paginación",
         "description": "",
+        "parameters": [
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "description": "Filtrar productos con precio menor o igual al indicado",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número de página (por defecto: 1)",
+            "required": false,
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Cantidad de elementos por página (por defecto: 10)",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -305,6 +330,119 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Obtener todas las ventas con datos del cliente y total",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Crear una venta con sus productos",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos de la venta y lista de productos",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id_cliente": {
+                  "type": "number",
+                  "example": 1
+                },
+                "fecha": {
+                  "type": "string",
+                  "example": "2026-08-29"
+                },
+                "estado": {
+                  "type": "string",
+                  "example": "completado"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id_producto": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "cantidad": {
+                        "type": "number",
+                        "example": 2
+                      }
+                    },
+                    "required": [
+                      "id_producto",
+                      "cantidad"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "id_cliente",
+                "fecha",
+                "estado",
+                "items"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/sales/{id}": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Obtener una venta con sus productos detallados",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
