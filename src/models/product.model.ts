@@ -7,9 +7,33 @@ export interface Product {
   precio: number;
 }
 
-// Obtener todos los productos
-export const getAllProducts = async (): Promise<Product[]> => {
-  const result = await pool.query("SELECT * FROM productos");
+// Obtener todos los productos (con filtro opcional de maxPrice)
+export const getAllProducts = async (
+  maxPrice?: number,
+  page: number = 1,
+  limit: number = 10
+): Promise<Product[]> => {
+  const offset = (page - 1) * limit;
+
+  // Caso 1: Se aplica filtro por precio y paginación
+  if (maxPrice !== undefined) {
+    const result = await pool.query(
+      `SELECT * FROM productos 
+       WHERE precio <= $1 
+       ORDER BY id_productos ASC 
+       LIMIT $2 OFFSET $3`,
+      [maxPrice, limit, offset]
+    );
+    return result.rows;
+  }
+
+  // Caso 2: Solo paginación con valores por defecto o recibidos
+  const result = await pool.query(
+    `SELECT * FROM productos 
+     ORDER BY id_productos ASC 
+     LIMIT $1 OFFSET $2`,
+    [limit, offset]
+  );
   return result.rows;
 };
 

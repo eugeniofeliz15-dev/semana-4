@@ -9,9 +9,37 @@ import {
 // GET /api/menu
 export const getMenu = async (req: Request, res: Response): Promise<void> => {
   /*  #swagger.tags = ['Products']
-      #swagger.summary = 'Obtener todos los productos del menú' */
+      #swagger.summary = 'Obtener productos del menú con filtros y paginación'
+      #swagger.parameters['maxPrice'] = {
+        in: 'query',
+        description: 'Filtrar productos con precio menor o igual al indicado',
+        required: false,
+        type: 'number'
+      }
+      #swagger.parameters['page'] = {
+        in: 'query',
+        description: 'Número de página (por defecto: 1)',
+        required: false,
+        type: 'integer',
+        default: 1
+      }
+      #swagger.parameters['limit'] = {
+        in: 'query',
+        description: 'Cantidad de elementos por página (por defecto: 10)',
+        required: false,
+        type: 'integer',
+        default: 10
+      } */
   try {
-    const products = await getAllProducts();
+    const maxPriceQuery = req.query.maxPrice as string | undefined;
+    const pageQuery = req.query.page as string | undefined;
+    const limitQuery = req.query.limit as string | undefined;
+
+    const maxPrice = maxPriceQuery !== undefined ? parseFloat(maxPriceQuery) : undefined;
+    const page = pageQuery !== undefined ? parseInt(pageQuery, 10) : 1;
+    const limit = limitQuery !== undefined ? parseInt(limitQuery, 10) : 10;
+
+    const products = await getAllProducts(maxPrice, page, limit);
     res.json(products);
   } catch (error) {
     console.error("Error al obtener el menú:", error);
